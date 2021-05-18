@@ -30,7 +30,7 @@
  *
  * Basic settings can be found in Configuration.h
  */
-#define CONFIGURATION_ADV_H_VERSION 020008
+#define CONFIGURATION_ADV_H_VERSION 02000801
 
 //===========================================================================
 //============================= Thermal Settings ============================
@@ -1300,6 +1300,8 @@
   //#define MENU_ADDAUTOSTART               // Add a menu option to run auto#.g files
 
   //#define BROWSE_MEDIA_ON_INSERT          // Open the file browser when media is inserted
+
+  //#define MEDIA_MENU_AT_TOP               // Force the media menu to be listed on the top of the main menu
 
   #define EVENT_GCODE_SD_ABORT "G28XY\nG91\nG1 F1000 Z+20\nG1 F5000 Y" STRINGIFY(Y_MAX_POS) "\nG90\nM84 X Y E" // G-code to run on SD Abort Print (e.g., "G28XY" or "G27")
 
