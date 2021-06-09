@@ -735,7 +735,7 @@
  * the position of the toolhead relative to the workspace.
  */
 
-//#define SENSORLESS_BACKOFF_MM  { 2, 2 }     // (mm) Backoff from endstops before sensorless homing
+//#define SENSORLESS_BACKOFF_MM  { 2, 2, 0 }  // (mm) Backoff from endstops before sensorless homing
 
 #define HOMING_BUMP_MM      { 5, 5, 5 }       // (mm) Backoff from endstops after first bump
                                               // For delta all values must be the same
@@ -2256,7 +2256,7 @@
    * Extra G-code to run while executing tool-change commands. Can be used to use an additional
    * stepper motor (I axis, see option LINEAR_AXES in Configuration.h) to drive the tool-changer.
    */
-  //#define EVENT_GCODE_TOOLCHANGE_T0 "G28 A\nG1 I0" // Extra G-code to run while executing tool-change command T0
+  //#define EVENT_GCODE_TOOLCHANGE_T0 "G28 A\nG1 A0" // Extra G-code to run while executing tool-change command T0
   //#define EVENT_GCODE_TOOLCHANGE_T1 "G1 A10"       // Extra G-code to run while executing tool-change command T1
 
   /**
@@ -3418,8 +3418,18 @@
       #define SPINDLE_LASER_POWERDOWN_DELAY   50 // (ms) Delay to allow the spindle to stop
 
     #endif
+
+    //
+    // Laser I2C Ammeter (High precision INA226 low/high side module)
+    //
+    //#define I2C_AMMETER
+    #if ENABLED(I2C_AMMETER)
+      #define I2C_AMMETER_IMAX            0.1    // (Amps) Calibration value for the expected current range
+      #define I2C_AMMETER_SHUNT_RESISTOR  0.1    // (Ohms) Calibration shunt resistor value
+    #endif
+
   #endif
-#endif
+#endif // SPINDLE_FEATURE || LASER_FEATURE
 
 /**
  * Synchronous Laser Control with M106/M107
