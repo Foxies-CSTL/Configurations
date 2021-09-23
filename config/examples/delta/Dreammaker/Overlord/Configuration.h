@@ -35,7 +35,7 @@
  *
  * Advanced settings can be found in Configuration_adv.h
  */
-#define CONFIGURATION_H_VERSION 02000901
+#define CONFIGURATION_H_VERSION 02000902
 
 //===========================================================================
 //============================= Getting Started =============================
@@ -56,15 +56,6 @@
  * Calibration Objects: https://www.thingiverse.com/thing:5573
  *                      https://www.thingiverse.com/thing:1278865
  */
-
-//===========================================================================
-//========================== DELTA / SCARA / TPARA ==========================
-//===========================================================================
-//
-// Download configurations from the link above and customize for your machine.
-// Examples are located in config/examples/delta, .../SCARA, and .../TPARA.
-//
-//===========================================================================
 
 // @section info
 
@@ -790,27 +781,30 @@
 
   #if EITHER(DELTA_AUTO_CALIBRATION, DELTA_CALIBRATION_MENU)
     // Set the steprate for papertest probing
-    #define PROBE_MANUALLY_STEP 0.05                              // (mm)
+    #define PROBE_MANUALLY_STEP 0.05      // (mm)
   #endif
 
   // Print surface diameter/2 minus unreachable space (avoid collisions with vertical towers).
-  #define DELTA_PRINTABLE_RADIUS 75.0                             // (mm) Overlord
+  #define DELTA_PRINTABLE_RADIUS 75.0     // (mm) Overlord
+
+  // Maximum reachable area
+  #define DELTA_MAX_RADIUS       75.0     // (mm)
 
   // Center-to-center distance of the holes in the diagonal push rods.
-  #define DELTA_DIAGONAL_ROD 206.0                                // (mm) Overlord
+  #define DELTA_DIAGONAL_ROD 206.0        // (mm) Overlord
 
   // Distance between bed and nozzle Z home position
-  #define DELTA_HEIGHT 186.14                                     // (mm) Overlord - Update this value using G33 auto calibrate
+  #define DELTA_HEIGHT 186.14             // (mm) Overlord - Update this value using G33 auto calibrate
 
-  #define DELTA_ENDSTOP_ADJ { -0.33, 0.0, -0.85 }                 // Update these values using G33 auto calibrate
+  #define DELTA_ENDSTOP_ADJ { -0.33, 0.0, -0.85 } // Update these values using G33 auto calibrate
 
   // Horizontal distance bridged by diagonal push rods when effector is centered.
-  #define DELTA_RADIUS 100.63                                     // (mm) Overlord - Update this value using G33 auto calibrate
+  #define DELTA_RADIUS 100.63             // (mm) Overlord - Update this value using G33 auto calibrate
 
   // Trim adjustments for individual towers
   // tower angle corrections for X and Y tower / rotate XYZ so Z tower angle = 0
   // measured in degrees anticlockwise looking from above the printer
-  #define DELTA_TOWER_ANGLE_TRIM { 0.69, 0.0, -0.70 }             // Update these values using G33 auto calibrate
+  #define DELTA_TOWER_ANGLE_TRIM { 0.69, 0.0, -0.70 } // Update these values using G33 auto calibrate
 
   // Delta radius and diagonal rod adjustments (mm)
   #define DELTA_RADIUS_TRIM_TOWER { 0.0, 0.0, 0.0 }
@@ -2139,10 +2133,10 @@
  *
  * Select the language to display on the LCD. These languages are available:
  *
- *   en, an, bg, ca, cz, da, de, el, el_gr, es, eu, fi, fr, gl, hr, hu, it,
+ *   en, an, bg, ca, cz, da, de, el, el_CY, es, eu, fi, fr, gl, hr, hu, it,
  *   jp_kana, ko_KR, nl, pl, pt, pt_br, ro, ru, sk, sv, tr, uk, vi, zh_CN, zh_TW
  *
- * :{ 'en':'English', 'an':'Aragonese', 'bg':'Bulgarian', 'ca':'Catalan', 'cz':'Czech', 'da':'Danish', 'de':'German', 'el':'Greek', 'el_gr':'Greek (Greece)', 'es':'Spanish', 'eu':'Basque-Euskera', 'fi':'Finnish', 'fr':'French', 'gl':'Galician', 'hr':'Croatian', 'hu':'Hungarian', 'it':'Italian', 'jp_kana':'Japanese', 'ko_KR':'Korean (South Korea)', 'nl':'Dutch', 'pl':'Polish', 'pt':'Portuguese', 'pt_br':'Portuguese (Brazilian)', 'ro':'Romanian', 'ru':'Russian', 'sk':'Slovak', 'sv':'Swedish', 'tr':'Turkish', 'uk':'Ukrainian', 'vi':'Vietnamese', 'zh_CN':'Chinese (Simplified)', 'zh_TW':'Chinese (Traditional)' }
+ * :{ 'en':'English', 'an':'Aragonese', 'bg':'Bulgarian', 'ca':'Catalan', 'cz':'Czech', 'da':'Danish', 'de':'German', 'el':'Greek (Greece)', 'el_CY':'Greek (Cyprus)', 'es':'Spanish', 'eu':'Basque-Euskera', 'fi':'Finnish', 'fr':'French', 'gl':'Galician', 'hr':'Croatian', 'hu':'Hungarian', 'it':'Italian', 'jp_kana':'Japanese', 'ko_KR':'Korean (South Korea)', 'nl':'Dutch', 'pl':'Polish', 'pt':'Portuguese', 'pt_br':'Portuguese (Brazilian)', 'ro':'Romanian', 'ru':'Russian', 'sk':'Slovak', 'sv':'Swedish', 'tr':'Turkish', 'uk':'Ukrainian', 'vi':'Vietnamese', 'zh_CN':'Chinese (Simplified)', 'zh_TW':'Chinese (Traditional)' }
  */
 #define LCD_LANGUAGE en
 
@@ -2661,7 +2655,7 @@
 //  - Copy the downloaded DWIN_SET folder to the SD card.
 //
 // RELOADED (T5UID1)
-//  - Download https://github.com/Desuuuu/DGUS-reloaded
+//  - Download https://github.com/Desuuuu/DGUS-reloaded/releases
 //  - Copy the downloaded DWIN_SET folder to the SD card.
 //
 //#define DGUS_LCD_UI_ORIGIN
@@ -2886,6 +2880,8 @@
   #define BUTTON_DELAY_EDIT  50 // (ms) Button repeat delay for edit screens
   #define BUTTON_DELAY_MENU 250 // (ms) Button repeat delay for menus
 
+  //#define TOUCH_IDLE_SLEEP 300 // (secs) Turn off the TFT backlight if set (5mn)
+
   #define TOUCH_SCREEN_CALIBRATION
 
   //#define TOUCH_CALIBRATION_X 12316
@@ -3040,9 +3036,9 @@
  * Set this manually if there are extra servos needing manual control.
  * Set to 0 to turn off servo support.
  */
-//#define NUM_SERVOS 3 // Servo index starts with 0 for M280 command
+//#define NUM_SERVOS 3 // Note: Servo index starts with 0 for M280-M282 commands
 
-// (ms) Delay  before the next move will start, to give the servo time to reach its target angle.
+// (ms) Delay before the next move will start, to give the servo time to reach its target angle.
 // 300ms is a good value but you can try less delay.
 // If the servo can't reach the requested position, increase it.
 #define SERVO_DELAY { 300 }
@@ -3052,3 +3048,6 @@
 
 // Edit servo angles with M281 and save to EEPROM with M500
 //#define EDITABLE_SERVO_ANGLES
+
+// Disable servo with M282 to reduce power consumption, noise, and heat when not in use
+//#define SERVO_DETACH_GCODE
